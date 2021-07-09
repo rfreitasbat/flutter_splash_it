@@ -21,7 +21,7 @@ class SplashPage extends StatelessWidget {
                     Row(
                       children: [
                         Opacity(
-                          opacity: 0.6,
+                          opacity: 0.4,
                           child: Image.asset(
                             "assets/images/retangulo-dir.png",
                             width: 150,
@@ -36,7 +36,7 @@ class SplashPage extends StatelessWidget {
                     Row(
                       children: [
                         Opacity(
-                          opacity: 0.6,
+                          opacity: 0.4,
                           child: Image.asset(
                             "assets/images/retangulo-dir.png",
                             width: 120,
@@ -64,7 +64,7 @@ class SplashPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Opacity(
-                          opacity: 0.6,
+                          opacity: 0.4,
                           child: Image.asset(
                             "assets/images/retangulo-esq.png",
                             width: 120,
@@ -80,7 +80,7 @@ class SplashPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Opacity(
-                          opacity: 0.6,
+                          opacity: 0.4,
                           child: Image.asset(
                             "assets/images/retangulo-esq.png",
                             width: 150,
