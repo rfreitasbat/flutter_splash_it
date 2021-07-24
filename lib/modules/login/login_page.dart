@@ -1,7 +1,8 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:split_it/modules/login/login_controller.dart';
+import 'package:split_it/modules/login/login_service.dart';
+import 'package:split_it/modules/login/login_state.dart';
+import 'package:split_it/modules/login/widgets/social_button.dart';
 import 'package:split_it/theme/app_theme.dart';
 
 class LoginPage extends StatefulWidget {
@@ -12,6 +13,23 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  late LoginController controller;
+
+  @override
+  void initState() {
+    controller = LoginController(
+        service: LoginServiceImpl(),
+        onUpdate: () {
+          if (controller.state is LoginStateSuccess) {
+            final user = (controller.state as LoginStateSuccess).user;
+            Navigator.pushReplacementNamed(context, "/Home", arguments: user);
+          } else {
+            setState(() {});
+          }
+        });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,11 +45,7 @@ class _LoginPageState extends State<LoginPage> {
                   width: 236,
                   child: Text(
                     "Divida suas contas com seus amigos",
-                    style: GoogleFonts.montserrat(
-                      fontSize: 40,
-                      fontWeight: FontWeight.w700,
-                      color: AppTheme.colors.title,
-                    ),
+                    style: AppTheme.textStyles.title,
                   ),
                 ),
               ],
@@ -43,101 +57,52 @@ class _LoginPageState extends State<LoginPage> {
                 leading: Image.asset("assets/images/emoji.png"),
                 title: Text(
                   "Faça seu Login com uma das contas abaixo",
-                  style: GoogleFonts.inter(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    color: AppTheme.colors.button,
-                  ),
+                  style: AppTheme.textStyles.button,
                 ),
               ),
               SizedBox(height: 32),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 32),
-                child: Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      border: Border.fromBorderSide(
-                          BorderSide(color: AppTheme.colors.border))),
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 57,
-                        height: 57,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              width: 16,
-                            ),
-                            Image.asset("assets/images/google.png"),
-                            SizedBox(
-                              width: 16,
-                            ),
-                            Container(
-                              width: 1,
-                              color: AppTheme.colors.border,
-                            ),
-                          ],
-                        ),
-                      ),
-                      Expanded(child: Container()),
-                      Text(
-                        "Entrar com Google",
-                        style: GoogleFonts.inter(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          textStyle: TextStyle(color: AppTheme.colors.button),
-                        ),
-                      ),
-                      Expanded(child: Container())
-                    ],
+              if (controller.state is LoginStateLoading) ...[
+                CircularProgressIndicator(),
+              ] else if (controller.state is LoginStateFailure) ...[
+                Text((controller.state as LoginStateFailure).massage)
+              ] else
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 32),
+                  child: SocialButtonWidget(
+                    imagePath: "assets/images/google.png",
+                    textButton: "Entrar com google",
+                    onTap: () async {
+                      controller.googleSignIn();
+                    },
                   ),
                 ),
-              ),
               SizedBox(height: 12),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 32),
-                child: Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      border: Border.fromBorderSide(
-                          BorderSide(color: AppTheme.colors.border))),
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 57,
-                        height: 57,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              width: 16,
-                            ),
-                            Image.asset("assets/images/apple.png"),
-                            SizedBox(
-                              width: 16,
-                            ),
-                            Container(
-                              width: 1,
-                              color: AppTheme.colors.border,
-                            ),
-                          ],
-                        ),
-                      ),
-                      Expanded(child: Container()),
-                      Text(
-                        "Entrar com Apple",
-                        style: GoogleFonts.inter(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          textStyle: TextStyle(color: AppTheme.colors.button),
-                        ),
-                      ),
-                      Expanded(child: Container())
-                    ],
-                  ),
-                ),
-              ),
+              //TODO (a fazer) preciza fazer configuração Apple
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 32),
+              //   child: SocialButtonWidget(
+              //     imagePath: "assets/images/apple.png",
+              //     textButton: "Ëntrar com apple",
+              //     onTap: () async {
+              //       try {
+              //         {
+              //           final credential =
+              //               await SignInWithApple.getAppleIDCredential(
+              //             scopes: [
+              //               AppleIDAuthorizationScopes.email,
+              //               AppleIDAuthorizationScopes.fullName,
+              //             ],
+              //           );
+              //           print(credential);
+              //           // Now send the credential (especially `credential.authorizationCode`) to your server to create a session
+              //           // after they have been validated with Apple (see `Integration` section for more information on how to do this)
+              //         }
+              //       } catch (e) {
+              //         print(e);
+              //       }
+              //     },
+              //   ),
+              //),
             ],
           )
         ],
