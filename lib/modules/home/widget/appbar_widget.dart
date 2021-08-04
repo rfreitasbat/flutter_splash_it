@@ -1,3 +1,5 @@
+//APPBAr feita por min
+
 import 'package:flutter/material.dart';
 import 'package:split_it/modules/login/model/user_model.dart';
 import 'package:split_it/theme/app_theme.dart';
@@ -61,17 +63,6 @@ class AppBarWidget extends PreferredSize {
                         )
                       ],
                     ),
-                  ),
-                  Row(
-                    children: [
-                      Container(
-                        height: 30,
-                        width: 30,
-                        decoration: BoxDecoration(
-                          color: Color(0xFFFFFFFF),
-                        ),
-                      )
-                    ],
                   )
                 ],
               ),
