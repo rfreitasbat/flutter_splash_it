@@ -27,7 +27,7 @@ void main() {
     expect(states.length, 2);
   });
 
-  test("Testando o Google SignIn retornando Sucesso", () async {
+  test("Testando o Google SignIn retornando Failure", () async {
     expect(controller.state, isInstanceOf<LoginStateEmpty>());
     final states = <LoginState>[];
     controller.Listen((state) => states.add(state));
@@ -37,5 +37,19 @@ void main() {
     expect(states[1], isInstanceOf<LoginStateFailure>());
     expect((states[1] as LoginStateFailure).massage, "Deu Erro");
     expect(states.length, 2);
+  });
+
+  test("Testando o metodo Listen", () async {
+    controller.state = LoginStateLoading();
+    controller.Listen(
+        (state) => expect(state, isInstanceOf<LoginStateLoading>()));
+    controller.update();
+  });
+
+  test("Testando o metodo Update", () async {
+    controller.state = LoginStateLoading();
+    controller.Listen(
+        (state) => expect(state, isInstanceOf<LoginStateLoading>()));
+    controller.update();
   });
 }

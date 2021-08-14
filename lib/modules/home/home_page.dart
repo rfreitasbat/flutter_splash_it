@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:split_it/modules/home/widget/app_bar_widget.dart';
+import 'package:split_it/modules/home/home_controller.dart';
+import 'package:split_it/modules/home/home_state.dart';
+import 'package:split_it/modules/home/widget/appbar/app_bar_widget.dart';
 import 'package:split_it/modules/home/widget/event_tile_widget.dart';
 import 'package:split_it/modules/login/model/user_model.dart';
-import 'package:split_it/shared/models/event_model.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
@@ -12,18 +13,16 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final events = [
-    EventModel(
-        created: DateTime.now(), title: "Churrasco", value: 526, people: 5),
-    EventModel(
-        created: DateTime.now(), title: "Churrasco", value: -526, people: 5),
-    EventModel(
-        created: DateTime.now(), title: "Churrasco", value: -526, people: 5),
-    EventModel(
-        created: DateTime.now(), title: "Churrasco", value: 526, people: 5),
-    EventModel(
-        created: DateTime.now(), title: "Churrasco", value: -526, people: 5),
-  ];
+  final controller = HomeController();
+
+  @override
+  void initState() {
+    controller.getEvents();
+    controller.Listen((state) {
+      setState(() {});
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,11 +39,23 @@ class _HomePageState extends State<HomePage> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                ...events
-                    .map(
-                      (e) => EventTileWidget(model: e),
-                    )
-                    .toList()
+                if (controller.state is HomeStateLoading) ...[
+                  SizedBox(
+                    height: 150,
+                  ),
+                  Center(child: CircularProgressIndicator()),
+                ] else if (controller.state is HomeStateSuccess) ...[
+                  ...(controller.state as HomeStateSuccess)
+                      .events
+                      .map(
+                        (e) => EventTileWidget(model: e),
+                      )
+                      .toList()
+                ] else if (controller.state is HomeStateFailure) ...[
+                  Text((controller.state as HomeStateFailure).massage)
+                ] else ...[
+                  Container()
+                ]
               ],
             ),
           )),
