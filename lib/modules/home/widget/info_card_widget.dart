@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:split_it/modules/home/widget/icon_value.dart';
 import 'package:split_it/theme/app_theme.dart';
 
+import 'loading_widget.dart';
+
 class InfoCardWidget extends StatelessWidget {
   final double value;
-  const InfoCardWidget({Key? key, required this.value}) : super(key: key);
+  final bool isLoading;
+  const InfoCardWidget({
+    Key? key,
+    required this.value,
+    this.isLoading = false,
+  }) : super(key: key);
 
   TextStyle get textStyle => value >= 0
       ? AppTheme.textStyles.infoCardValue1
@@ -44,10 +52,14 @@ class InfoCardWidget extends StatelessWidget {
                 SizedBox(
                   height: 4,
                 ),
-                Text(
-                  "R\$ $value",
-                  style: textStyle,
-                ),
+                if (isLoading) ...[
+                  LoadingWidget(size: Size(98, 24))
+                ] else ...[
+                  Text(
+                    "R\$ $value",
+                    style: textStyle,
+                  ),
+                ]
               ],
             )
           ],
