@@ -33,6 +33,7 @@ class _HomePageState extends State<HomePage> {
         user: user,
         onTapAddButton: () {
           print("Clicou Parabêns");
+          Navigator.pushNamed(context, "/Create_Split");
         },
       ),
       body: Padding(

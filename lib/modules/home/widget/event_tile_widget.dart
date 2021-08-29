@@ -4,12 +4,14 @@ import 'package:split_it/modules/home/widget/icon_value.dart';
 import 'package:split_it/modules/home/widget/loading_widget.dart';
 import 'package:split_it/shared/models/event_model.dart';
 import 'package:split_it/theme/app_theme.dart';
+import 'package:intl/intl.dart';
 
 class EventTileWidget extends StatelessWidget {
   final EventModel model;
   final bool isLoading;
+  late DateTime date = model.created!;
 
-  const EventTileWidget({
+  EventTileWidget({
     Key? key,
     required this.model,
     this.isLoading = false,
@@ -68,14 +70,15 @@ class EventTileWidget extends StatelessWidget {
                     style: AppTheme.textStyles.eventTileTitle,
                   ),
                   subtitle: Text(
-                    model.created!.toIso8601String(),
+                    DateFormat("dd/MM/yyyy").format(date),
                     style: AppTheme.textStyles.eventTileSubtitle,
                   ),
                   trailing: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "R\$ ${model.value}",
+                        NumberFormat.simpleCurrency(locale: 'pt_BR')
+                            .format(model.value),
                         style: AppTheme.textStyles.eventTileMoney,
                       ),
                       SizedBox(
