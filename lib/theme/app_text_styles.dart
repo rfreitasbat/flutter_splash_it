@@ -21,6 +21,9 @@ abstract class AppTextStyles {
   TextStyle get stepSubTitle;
   TextStyle get hintTextField;
   TextStyle get textField;
+  TextStyle get titleDetails;
+  TextStyle get subTitleDetails;
+  TextStyle get negativeDetails;
 }
 
 class AppTextStylesDefault implements AppTextStyles {
@@ -151,4 +154,22 @@ class AppTextStylesDefault implements AppTextStyles {
         fontSize: 16,
         fontWeight: FontWeight.w500,
       );
+
+  @override
+  TextStyle get titleDetails => GoogleFonts.montserrat(
+      color: AppTheme.colors.titleDetails,
+      fontSize: 22,
+      fontWeight: FontWeight.w700);
+
+  @override
+  TextStyle get subTitleDetails => GoogleFonts.montserrat(
+      color: AppTheme.colors.subTitleDetails,
+      fontSize: 14,
+      fontWeight: FontWeight.w700);
+
+  @override
+  TextStyle get negativeDetails => GoogleFonts.montserrat(
+      color: AppTheme.colors.negativeDetails,
+      fontSize: 14,
+      fontWeight: FontWeight.w700);
 }

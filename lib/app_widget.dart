@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:split_it/modules/create_split/create_split_page.dart';
+import 'package:split_it/modules/details_split/details_split_page.dart';
 import 'package:split_it/modules/error/error_page.dart';
 import 'package:split_it/modules/home/home_page.dart';
 import 'package:split_it/modules/login/login_page.dart';
@@ -11,13 +12,14 @@ class AppWidget extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Split.it",
-      initialRoute: "/Splash",
+      initialRoute: "/Details_Split",
       routes: {
         "/Splash": (context) => SplashPage(),
         "/Login": (context) => LoginPage(),
         "/Error": (context) => ErrorPage(),
         "/Home": (context) => HomePage(),
         "/Create_Split": (context) => CreateSplitPage(),
+        "/Details_Split": (context) => DetailsSplitPage(),
       },
     );
   }

@@ -1,6 +1,7 @@
 // AppBAr feita pelo curso
 import 'package:flutter/material.dart';
 import 'package:split_it/modules/home/widget/add_button_widget.dart';
+import 'package:split_it/modules/home/widget/bottom_app_bar/bottom_app_bar_widget.dart';
 import 'package:split_it/modules/login/model/user_model.dart';
 import 'package:split_it/theme/app_theme.dart';
 

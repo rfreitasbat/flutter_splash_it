@@ -7,7 +7,6 @@ import 'package:split_it/theme/app_theme.dart';
 
 import '../../home_controller.dart';
 import '../../home_state.dart';
-import '../add_button_widget.dart';
 import '../event_tile_widget.dart';
 
 class SliverAppBarWidget extends PreferredSize {
@@ -20,11 +19,13 @@ class SliverAppBarWidget extends PreferredSize {
     required this.onTapAddButton,
     required this.controller,
   }) : super(
-            preferredSize: Size.fromHeight(302),
-            child: NestedScrollView(
-              headerSliverBuilder: (context, condition) {
-                return [
-                  SliverAppBar(
+          preferredSize: Size.fromHeight(302),
+          child: NestedScrollView(
+            headerSliverBuilder: (context, condition) {
+              return [
+                SliverPadding(
+                  padding: EdgeInsets.only(top: 18),
+                  sliver: SliverAppBar(
                     backgroundColor: AppTheme.colors.backgroudSplash,
                     expandedHeight: 300,
                     floating: false,
@@ -36,33 +37,35 @@ class SliverAppBarWidget extends PreferredSize {
                       child: FlexibleSpaceBar(background: BottomAppBarWidget()),
                     ),
                   ),
-                ];
-              },
-              body: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        if (controller.state is HomeStateLoading) ...[
-                          ...List.generate(
-                              1,
-                              (index) => EventTileWidget(
-                                  isLoading: true, model: EventModel()))
-                        ] else if (controller.state is HomeStateSuccess) ...[
-                          ...(controller.state as HomeStateSuccess)
-                              .events
-                              .map(
-                                (e) => EventTileWidget(model: e),
-                              )
-                              .toList()
-                        ] else if (controller.state is HomeStateFailure) ...[
-                          Text((controller.state as HomeStateFailure).massage)
-                        ] else ...[
-                          Container()
-                        ]
-                      ],
-                    ),
-                  )),
-            ));
+                ),
+              ];
+            },
+            body: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    if (controller.state is HomeStateLoading) ...[
+                      ...List.generate(
+                          1,
+                          (index) => EventTileWidget(
+                              isLoading: true, model: EventModel()))
+                    ] else if (controller.state is HomeStateSuccess) ...[
+                      ...(controller.state as HomeStateSuccess)
+                          .events
+                          .map(
+                            (e) => EventTileWidget(model: e),
+                          )
+                          .toList()
+                    ] else if (controller.state is HomeStateFailure) ...[
+                      Text((controller.state as HomeStateFailure).massage)
+                    ] else ...[
+                      Container()
+                    ]
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
 }

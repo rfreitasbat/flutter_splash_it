@@ -29,6 +29,10 @@ abstract class AppColorsBase {
   Color get hintTextField;
   Color get textField;
   Color get inputBorder;
+  Color get titleDetails;
+  Color get subTitleDetails;
+  Color get dividerDetails;
+  Color get negativeDetails;
 }
 
 class AppColorsDefault implements AppColorsBase {
@@ -115,4 +119,16 @@ class AppColorsDefault implements AppColorsBase {
 
   @override
   Color get stepperNextButtonDisanled => Color(0xFF666666);
+
+  @override
+  Color get titleDetails => Color(0xFF455250);
+
+  @override
+  Color get subTitleDetails => Color(0xFF455250);
+
+  @override
+  Color get dividerDetails => Color(0xFFA4B2AE);
+
+  @override
+  Color get negativeDetails => Color(0xFFFF0000);
 }
