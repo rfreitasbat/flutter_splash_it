@@ -12,13 +12,12 @@ void main() {
   late LoginService service;
   setUp(() {
     service = LoginServiceMock();
-    controller = LoginController(service: service, onUpdate: () {});
+    controller = LoginController(service: service);
   });
 
   test("Testando o Google SignIn retornando Sucesso", () async {
     expect(controller.state, isInstanceOf<LoginStateEmpty>());
     final states = <LoginState>[];
-    controller.Listen((state) => states.add(state));
     when(service.googleSifnIn)
         .thenAnswer((_) async => UserModel(email: "Email", id: "ÏD"));
     await controller.googleSignIn();
@@ -30,7 +29,6 @@ void main() {
   test("Testando o Google SignIn retornando Failure", () async {
     expect(controller.state, isInstanceOf<LoginStateEmpty>());
     final states = <LoginState>[];
-    controller.Listen((state) => states.add(state));
     when(service.googleSifnIn).thenThrow("Deu Erro");
     await controller.googleSignIn();
     expect(states[0], isInstanceOf<LoginStateLoading>());
@@ -41,15 +39,9 @@ void main() {
 
   test("Testando o metodo Listen", () async {
     controller.state = LoginStateLoading();
-    controller.Listen(
-        (state) => expect(state, isInstanceOf<LoginStateLoading>()));
-    controller.update();
   });
 
   test("Testando o metodo Update", () async {
     controller.state = LoginStateLoading();
-    controller.Listen(
-        (state) => expect(state, isInstanceOf<LoginStateLoading>()));
-    controller.update();
   });
 }
