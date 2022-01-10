@@ -12,7 +12,7 @@ class AppWidget extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Split.it",
-      initialRoute: "/Details_Split",
+      initialRoute: "/Splash",
       routes: {
         "/Splash": (context) => SplashPage(),
         "/Login": (context) => LoginPage(),
