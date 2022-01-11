@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:split_it/modules/home/widget/appbar/app_bar_widget.dart';
 import 'package:split_it/modules/home/widget/bottom_app_bar/bottom_app_bar_widget.dart';
 import 'package:split_it/modules/login/model/user_model.dart';
@@ -45,23 +46,29 @@ class SliverAppBarWidget extends PreferredSize {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    if (controller.state is HomeStateLoading) ...[
-                      ...List.generate(
-                          1,
-                          (index) => EventTileWidget(
-                              isLoading: true, model: EventModel()))
-                    ] else if (controller.state is HomeStateSuccess) ...[
-                      ...(controller.state as HomeStateSuccess)
-                          .events
-                          .map(
-                            (e) => EventTileWidget(model: e),
-                          )
-                          .toList()
-                    ] else if (controller.state is HomeStateFailure) ...[
-                      Text((controller.state as HomeStateFailure).massage)
-                    ] else ...[
-                      Container()
-                    ]
+                    Observer(builder: (context) {
+                      if (controller.state is HomeStateLoading) {
+                        return Column(
+                            children: List.generate(
+                                1,
+                                (index) => EventTileWidget(
+                                    isLoading: true, model: EventModel())));
+                      } else if (controller.state is HomeStateSuccess) {
+                        return Column(
+                          children: (controller.state as HomeStateSuccess)
+                              .events
+                              .map(
+                                (e) => EventTileWidget(model: e),
+                              )
+                              .toList(),
+                        );
+                      } else if (controller.state is HomeStateFailure) {
+                        return Text(
+                            (controller.state as HomeStateFailure).massage);
+                      } else {
+                        return Container();
+                      }
+                    })
                   ],
                 ),
               ),

@@ -17,9 +17,6 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     controller.getEvents();
-    controller.Listen((state) {
-      setState(() {});
-    });
     super.initState();
   }
 
