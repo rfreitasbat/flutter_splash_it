@@ -14,6 +14,13 @@ class StepTwoPage extends StatefulWidget {
 
 class _StepTwoPageState extends State<StepTwoPage> {
   final controller = StepTwoController();
+
+  @override
+  void initState() {
+    controller.getFriends();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -30,12 +37,35 @@ class _StepTwoPageState extends State<StepTwoPage> {
         ),
         SizedBox(height: 35),
         Observer(builder: (_) {
-          if (controller.frinds.isEmpty) {
+          if (controller.selectedFriends.isEmpty) {
+            return Container();
+          } else {
+            return Column(children: [
+              ...controller.selectedFriends
+                  .map((e) => PersonTileWidget(
+                        name: e['name'],
+                        isRemoved: true,
+                        onPressed: () {
+                          controller.removeFriend(e);
+                        },
+                      ))
+                  .toList(),
+              SizedBox(height: 15),
+            ]);
+          }
+        }),
+        Observer(builder: (_) {
+          if (controller.items.isEmpty) {
             return Text("Nenhum amigo encontrado");
           } else {
             return Column(
-              children: controller.frinds
-                  .map((e) => PersonTileWidget(name: e['name']))
+              children: controller.items
+                  .map((e) => PersonTileWidget(
+                        name: e['name'],
+                        onPressed: () {
+                          controller.addFriend(e);
+                        },
+                      ))
                   .toList(),
             );
           }

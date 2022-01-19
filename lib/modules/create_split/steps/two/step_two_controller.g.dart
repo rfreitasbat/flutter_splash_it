@@ -9,34 +9,73 @@ part of 'step_two_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$StepTwoController on _StepTwoControllerBase, Store {
-  final _$frindsAtom = Atom(name: '_StepTwoControllerBase.frinds');
+  Computed<List<Map<String, dynamic>>>? _$itemsComputed;
 
   @override
-  List<Map<String, dynamic>> get frinds {
-    _$frindsAtom.reportRead();
-    return super.frinds;
+  List<Map<String, dynamic>> get items => (_$itemsComputed ??=
+          Computed<List<Map<String, dynamic>>>(() => super.items,
+              name: '_StepTwoControllerBase.items'))
+      .value;
+
+  final _$_friendsAtom = Atom(name: '_StepTwoControllerBase._friends');
+
+  @override
+  List<Map<String, dynamic>> get _friends {
+    _$_friendsAtom.reportRead();
+    return super._friends;
   }
 
   @override
-  set frinds(List<Map<String, dynamic>> value) {
-    _$frindsAtom.reportWrite(value, super.frinds, () {
-      super.frinds = value;
+  set _friends(List<Map<String, dynamic>> value) {
+    _$_friendsAtom.reportWrite(value, super._friends, () {
+      super._friends = value;
     });
   }
 
-  final _$getFrindsAsyncAction =
-      AsyncAction('_StepTwoControllerBase.getFrinds');
+  final _$_selectedFriendsAtom =
+      Atom(name: '_StepTwoControllerBase._selectedFriends');
 
   @override
-  Future<void> getFrinds(String search) {
-    return _$getFrindsAsyncAction.run(() => super.getFrinds(search));
+  List<Map<String, dynamic>> get _selectedFriends {
+    _$_selectedFriendsAtom.reportRead();
+    return super._selectedFriends;
+  }
+
+  @override
+  set _selectedFriends(List<Map<String, dynamic>> value) {
+    _$_selectedFriendsAtom.reportWrite(value, super._selectedFriends, () {
+      super._selectedFriends = value;
+    });
+  }
+
+  final _$searchAtom = Atom(name: '_StepTwoControllerBase.search');
+
+  @override
+  String get search {
+    _$searchAtom.reportRead();
+    return super.search;
+  }
+
+  @override
+  set search(String value) {
+    _$searchAtom.reportWrite(value, super.search, () {
+      super.search = value;
+    });
+  }
+
+  final _$getFriendsAsyncAction =
+      AsyncAction('_StepTwoControllerBase.getFriends');
+
+  @override
+  Future<void> getFriends() {
+    return _$getFriendsAsyncAction.run(() => super.getFriends());
   }
 
   final _$_StepTwoControllerBaseActionController =
       ActionController(name: '_StepTwoControllerBase');
 
   @override
-  dynamic onChange(String value) {
+  void onChange(String value) {
     final _$actionInfo = _$_StepTwoControllerBaseActionController.startAction(
         name: '_StepTwoControllerBase.onChange');
     try {
@@ -47,9 +86,32 @@ mixin _$StepTwoController on _StepTwoControllerBase, Store {
   }
 
   @override
+  void addFriend(Map<String, dynamic> friend) {
+    final _$actionInfo = _$_StepTwoControllerBaseActionController.startAction(
+        name: '_StepTwoControllerBase.addFriend');
+    try {
+      return super.addFriend(friend);
+    } finally {
+      _$_StepTwoControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void removeFriend(Map<String, dynamic> friend) {
+    final _$actionInfo = _$_StepTwoControllerBaseActionController.startAction(
+        name: '_StepTwoControllerBase.removeFriend');
+    try {
+      return super.removeFriend(friend);
+    } finally {
+      _$_StepTwoControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
-frinds: ${frinds}
+search: ${search},
+items: ${items}
     ''';
   }
 }

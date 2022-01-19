@@ -68,7 +68,16 @@ class _LoginPageState extends State<LoginPage> {
                 if (controller.state is LoginStateLoading)
                   return CircularProgressIndicator();
                 else if (controller.state is LoginStateFailure)
-                  return Text((controller.state as LoginStateFailure).massage);
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 32),
+                    child: SocialButtonWidget(
+                      imagePath: "assets/images/google.png",
+                      textButton: "Entrar com google",
+                      onTap: () async {
+                        controller.googleSignIn();
+                      },
+                    ),
+                  );
                 else
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 32),
