@@ -47,6 +47,22 @@ mixin _$CreateSplitController on _CreateSplitController, Store {
     });
   }
 
+  final _$selectedFriendsAtom =
+      Atom(name: '_CreateSplitController.selectedFriends');
+
+  @override
+  List<FriendModel> get selectedFriends {
+    _$selectedFriendsAtom.reportRead();
+    return super.selectedFriends;
+  }
+
+  @override
+  set selectedFriends(List<FriendModel> value) {
+    _$selectedFriendsAtom.reportWrite(value, super.selectedFriends, () {
+      super.selectedFriends = value;
+    });
+  }
+
   final _$_CreateSplitControllerActionController =
       ActionController(name: '_CreateSplitController');
 
@@ -73,6 +89,17 @@ mixin _$CreateSplitController on _CreateSplitController, Store {
   }
 
   @override
+  void setSelectedFriends(List<FriendModel> list) {
+    final _$actionInfo = _$_CreateSplitControllerActionController.startAction(
+        name: '_CreateSplitController.setSelectedFriends');
+    try {
+      return super.setSelectedFriends(list);
+    } finally {
+      _$_CreateSplitControllerActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setEventName(String name) {
     final _$actionInfo = _$_CreateSplitControllerActionController.startAction(
         name: '_CreateSplitController.setEventName');
@@ -88,6 +115,7 @@ mixin _$CreateSplitController on _CreateSplitController, Store {
     return '''
 currentPage: ${currentPage},
 eventName: ${eventName},
+selectedFriends: ${selectedFriends},
 enableNavigateButton: ${enableNavigateButton}
     ''';
   }

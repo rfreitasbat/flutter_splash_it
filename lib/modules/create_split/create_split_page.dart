@@ -26,7 +26,9 @@ class _CreateSplitPageState extends State<CreateSplitPage> {
       StepOnePage(
         controller: controller,
       ),
-      StepTwoPage(),
+      StepTwoPage(
+        controller: controller,
+      ),
       StepThreePage(),
     ];
     super.initState();

@@ -24,6 +24,8 @@ abstract class AppTextStyles {
   TextStyle get titleDetails;
   TextStyle get subTitleDetails;
   TextStyle get negativeDetails;
+  TextStyle get addedFriend;
+  TextStyle get notAddedFriend;
 }
 
 class AppTextStylesDefault implements AppTextStyles {
@@ -172,4 +174,18 @@ class AppTextStylesDefault implements AppTextStyles {
       color: AppTheme.colors.negativeDetails,
       fontSize: 14,
       fontWeight: FontWeight.w700);
+
+  @override
+  TextStyle get addedFriend => GoogleFonts.montserrat(
+        color: AppTheme.colors.addedFriend,
+        fontSize: 16,
+        fontWeight: FontWeight.w700,
+      );
+
+  @override
+  TextStyle get notAddedFriend => GoogleFonts.inter(
+        color: AppTheme.colors.button,
+        fontSize: 16,
+        fontWeight: FontWeight.w400,
+      );
 }

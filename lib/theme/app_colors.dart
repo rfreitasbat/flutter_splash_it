@@ -33,6 +33,9 @@ abstract class AppColorsBase {
   Color get subTitleDetails;
   Color get dividerDetails;
   Color get negativeDetails;
+  Color get iconRemoveFriend;
+  Color get IconAddFriend;
+  Color get addedFriend;
 }
 
 class AppColorsDefault implements AppColorsBase {
@@ -131,4 +134,13 @@ class AppColorsDefault implements AppColorsBase {
 
   @override
   Color get negativeDetails => Color(0xFFFF0000);
+
+  @override
+  Color get IconAddFriend => Color(0xFF40B28C);
+
+  @override
+  Color get iconRemoveFriend => Color(0xFFF83F5B);
+
+  @override
+  Color get addedFriend => Color(0xFF455250);
 }
